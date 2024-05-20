@@ -1,6 +1,6 @@
 package br.com.shop.controllers;
 
-import br.com.shop.DTOs.OrderDTO;
+import br.com.shop.DTOs.OrderDTOInput;
 import br.com.shop.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity createOrder(@RequestBody OrderDTO orderDTO){
-        return orderService.createOrder(orderDTO);
+    public ResponseEntity createOrder(@RequestBody OrderDTOInput orderDTOInput){
+        return orderService.createOrder(orderDTOInput);
     }
 }

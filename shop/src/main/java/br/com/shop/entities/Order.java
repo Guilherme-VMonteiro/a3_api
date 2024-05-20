@@ -17,7 +17,6 @@ public class Order {
 
     @ManyToOne()
     @JoinColumn(name = "user_id")
-    @JsonManagedReference
     private User user;
 
     @Column(nullable = false)

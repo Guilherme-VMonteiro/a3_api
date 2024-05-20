@@ -27,7 +27,6 @@ public class Product {
     private Integer quantity;
 
     @ManyToMany(mappedBy = "products")
-    @JsonBackReference
     private List<Order> orders;
 
     public Product() {

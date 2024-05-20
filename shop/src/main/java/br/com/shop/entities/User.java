@@ -23,7 +23,6 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy = "user")
-    @JsonBackReference
     private List<Order> orders;
 
     public User() {
