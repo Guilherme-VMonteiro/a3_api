@@ -3,6 +3,7 @@ package br.com.shop.services;
 import br.com.shop.DTOs.OrderDTO;
 import br.com.shop.DTOs.OrderDTOInput;
 import br.com.shop.entities.Order;
+import br.com.shop.entities.OrderStatus;
 import br.com.shop.entities.Product;
 import br.com.shop.entities.User;
 import br.com.shop.repositories.OrderRepository;
@@ -60,7 +61,11 @@ public class OrderService {
             totalPrice += product.getPrice();
         }
 
-        Order order = new Order(userOptional.get(), new Date(), totalPrice, products);
+        if(orderDTOInput.getOrderStatus() == null){
+            orderDTOInput.setOrderStatus(OrderStatus.AWAITING_PAYMENT);
+        }
+
+        Order order = new Order(userOptional.get(), new Date(), totalPrice, orderDTOInput.getOrderStatus(),products);
 
         return ResponseEntity.ok(modelMapper.map(orderRepository.save(order), OrderDTO.class));
     }

@@ -1,6 +1,5 @@
 package br.com.shop.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -26,6 +25,9 @@ public class Order {
     @Column(nullable = false)
     private Float totalPrice;
 
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
+
     @ManyToMany()
     @JoinTable(
             name = "order_products",
@@ -41,6 +43,7 @@ public class Order {
         this.orderDate = orderDate;
         this.totalPrice = totalPrice;
         this.products = products;
+        this.orderStatus = OrderStatus.AWAITING_PAYMENT;
     }
 
     public Order(Long id, User user, Date orderDate, Float totalPrice, List<Product> products) {
@@ -48,6 +51,24 @@ public class Order {
         this.user = user;
         this.orderDate = orderDate;
         this.totalPrice = totalPrice;
+        this.products = products;
+        this.orderStatus = OrderStatus.AWAITING_PAYMENT;
+    }
+
+    public Order(User user, Date orderDate, Float totalPrice, OrderStatus orderStatus, List<Product> products) {
+        this.user = user;
+        this.orderDate = orderDate;
+        this.totalPrice = totalPrice;
+        this.orderStatus = orderStatus;
+        this.products = products;
+    }
+
+    public Order(Long id, User user, Date orderDate, Float totalPrice, OrderStatus orderStatus, List<Product> products) {
+        this.id = id;
+        this.user = user;
+        this.orderDate = orderDate;
+        this.totalPrice = totalPrice;
+        this.orderStatus = orderStatus;
         this.products = products;
     }
 
@@ -91,16 +112,24 @@ public class Order {
         this.products = products;
     }
 
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(id, order.id) && Objects.equals(user, order.user) && Objects.equals(orderDate, order.orderDate) && Objects.equals(totalPrice, order.totalPrice) && Objects.equals(products, order.products);
+        return Objects.equals(id, order.id) && Objects.equals(user, order.user) && Objects.equals(orderDate, order.orderDate) && Objects.equals(totalPrice, order.totalPrice) && orderStatus == order.orderStatus && Objects.equals(products, order.products);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, orderDate, totalPrice, products);
+        return Objects.hash(id, user, orderDate, totalPrice, orderStatus, products);
     }
 }

@@ -1,5 +1,7 @@
 package br.com.shop.DTOs;
 
+import br.com.shop.entities.OrderStatus;
+
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +11,7 @@ public class OrderDTO {
     private Date orderDate;
     private Float totalPrice;
     private List<ProductDTO> products;
+    private OrderStatus orderStatus;
 
     public OrderDTO() {
     }
@@ -18,6 +21,14 @@ public class OrderDTO {
         this.orderDate = orderDate;
         this.totalPrice = totalPrice;
         this.products = products;
+    }
+
+    public OrderDTO(Long id, Date orderDate, Float totalPrice, List<ProductDTO> products, OrderStatus orderStatus) {
+        this.id = id;
+        this.orderDate = orderDate;
+        this.totalPrice = totalPrice;
+        this.products = products;
+        this.orderStatus = orderStatus;
     }
 
     public Long getId() {
@@ -50,5 +61,13 @@ public class OrderDTO {
 
     public void setProducts(List<ProductDTO> products) {
         this.products = products;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }
